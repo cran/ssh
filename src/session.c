@@ -27,7 +27,7 @@ static SEXP ssh_ptr_create(ssh_session ssh){
 static void assert_ssh(int rc, const char * what, ssh_session ssh){
   if (rc != SSH_OK){
     char buf[1024];
-    strncpy(buf, ssh_get_error(ssh), 1024);
+    strncpy(buf, ssh_get_error(ssh), 1023);
     ssh_disconnect(ssh);
     ssh_free(ssh);
     Rf_errorcall(R_NilValue, "libssh failure at '%s': %s", what, buf);
@@ -54,7 +54,6 @@ static size_t password_cb(SEXP rpass, const char * prompt, char buf[1024]){
 }
 
 int my_auth_callback(const char *prompt, char *buf, size_t len, int echo, int verify, void *userdata){
-  Rprintf("Calling my_auth_callback\n");
   SEXP rpass = (SEXP) userdata;
   password_cb(rpass, prompt, buf);
   return SSH_OK;
@@ -142,7 +141,7 @@ SEXP C_start_session(SEXP rhost, SEXP rport, SEXP ruser, SEXP keyfile, SEXP rpas
   ssh_key key;
   unsigned char * hash = NULL;
   size_t hlen = 0;
-  assert_ssh(ssh_get_publickey(ssh, &key), "ssh_get_publickey", ssh);
+  assert_ssh(myssh_get_publickey(ssh, &key), "myssh_get_publickey", ssh);
   assert_ssh(ssh_get_publickey_hash(key, SSH_PUBLICKEY_HASH_SHA1, &hash, &hlen), "ssh_get_publickey_hash", ssh);
   if(!ssh_is_server_known(ssh)){
     Rprintf("New server fingerprint: %s\n", ssh_get_hexa(hash, hlen));
@@ -178,7 +177,7 @@ SEXP C_ssh_info(SEXP ptr){
   ssh_key key;
   unsigned char * hash = NULL;
   size_t hlen = 0;
-  assert_ssh(ssh_get_publickey(ssh, &key), "ssh_get_publickey", ssh);
+  assert_ssh(myssh_get_publickey(ssh, &key), "ssh_get_publickey", ssh);
   assert_ssh(ssh_get_publickey_hash(key, SSH_PUBLICKEY_HASH_SHA1, &hash, &hlen), "ssh_get_publickey_hash", ssh);
 
   SEXP out = PROTECT(Rf_allocVector(VECSXP, 6));
@@ -199,4 +198,8 @@ SEXP C_ssh_info(SEXP ptr){
 SEXP C_disconnect_session(SEXP ptr){
   ssh_ptr_fin(ptr);
   return R_NilValue;
+}
+
+SEXP C_libssh_version(){
+  return Rf_mkString(SSH_STRINGIFY(LIBSSH_VERSION));
 }

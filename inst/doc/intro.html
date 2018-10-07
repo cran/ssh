@@ -1347,6 +1347,9 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
 }
@@ -1536,32 +1539,32 @@ ssh_userauth_publickey_auto: Successfully authenticated using /Users/jeroen/.ssh
 <div id="execute-script-or-command" class="section level2">
 <h2>Execute Script or Command</h2>
 <p>Run a command or script on the host and block while it runs. By default stdout and stderr are steamed directly back to the client. This function returns the exit status of the remote command (hence it does not automatically error for an unsuccessful exit status).</p>
-<pre class="r"><code>out &lt;- ssh_exec_wait(session, command = 'whoami')</code></pre>
+<pre class="r"><code>out &lt;- ssh_exec_wait(session, command = &#39;whoami&#39;)</code></pre>
 <pre><code>jeroen</code></pre>
 <pre class="r"><code>print(out)</code></pre>
 <pre><code>[1] 0</code></pre>
 <p>You can also run a script that consists of multiple commands.</p>
 <pre class="r"><code>ssh_exec_wait(session, command = c(
-  'curl -O https://cran.r-project.org/src/contrib/Archive/jsonlite/jsonlite_1.4.tar.gz',
-  'R CMD check jsonlite_1.4.tar.gz',
-  'rm -f jsonlite_1.4.tar.gz'
+  &#39;curl -O https://cran.r-project.org/src/contrib/Archive/jsonlite/jsonlite_1.4.tar.gz&#39;,
+  &#39;R CMD check jsonlite_1.4.tar.gz&#39;,
+  &#39;rm -f jsonlite_1.4.tar.gz&#39;
 ))</code></pre>
 <pre><code>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 1071k  100 1071k    0     0   654k      0  0:00:01  0:00:01 --:--:--  654k
-* using log directory '/home/jeroen/jsonlite.Rcheck'
+* using log directory &#39;/home/jeroen/jsonlite.Rcheck&#39;
 * using R version 3.4.3 (2017-11-30)
 * using platform: x86_64-pc-linux-gnu (64-bit)
 * using session charset: ASCII
-* checking for file 'jsonlite/DESCRIPTION' ... OK
-* this is package 'jsonlite' version '1.4'
+* checking for file &#39;jsonlite/DESCRIPTION&#39; ... OK
+* this is package &#39;jsonlite&#39; version &#39;1.4&#39;
 * checking package namespace information ... OK
 * checking package dependencies ...
 ...</code></pre>
 <div id="capturing-output" class="section level3">
 <h3>Capturing output</h3>
 <p>The <code>ssh_exec_internal()</code> is a convenient wrapper for <code>ssh_exec_wait()</code> which buffers the output steams and returns them as a raw vector. Also it raises an error by default when the remote command was not successful.</p>
-<pre class="r"><code>out &lt;- ssh_exec_internal(session, &quot;R -e 'rnorm(10)'&quot;)
+<pre class="r"><code>out &lt;- ssh_exec_internal(session, &quot;R -e &#39;rnorm(10)&#39;&quot;)
 print(out$status)</code></pre>
 <pre><code>[1] 0</code></pre>
 <pre class="r"><code>cat(rawToChar(out$stdout))</code></pre>
@@ -1572,15 +1575,15 @@ Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type 'license()' or 'licence()' for distribution details.
+Type &#39;license()&#39; or &#39;licence()&#39; for distribution details.
 
 R is a collaborative project with many contributors.
-Type 'contributors()' for more information and
-'citation()' on how to cite R or R packages in publications.
+Type &#39;contributors()&#39; for more information and
+&#39;citation()&#39; on how to cite R or R packages in publications.
 
-Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for an HTML browser interface to help.
-Type 'q()' to quit R.
+Type &#39;demo()&#39; for some demos, &#39;help()&#39; for on-line help, or
+&#39;help.start()&#39; for an HTML browser interface to help.
+Type &#39;q()&#39; to quit R.
 
 &gt; rnorm(10)
  [1]  0.14301778 -0.26873489  0.83931307  0.22034917  0.87214122 -0.13655736
@@ -1592,7 +1595,7 @@ Type 'q()' to quit R.
 <div id="using-sudo" class="section level3">
 <h3>Using sudo</h3>
 <p>Note that the exec functions are non interactive so they cannot prompt for a sudo password. A trick is to use <code>-S</code> which reads the password from stdin:</p>
-<pre class="r"><code>command &lt;- 'echo &quot;mypassword!&quot; | sudo -s -S apt-get update -y'
+<pre class="r"><code>command &lt;- &#39;echo &quot;mypassword!&quot; | sudo -s -S apt-get update -y&#39;
 out &lt;- ssh_exec_wait(session, command)</code></pre>
 <p>Be very careful with hardcoding passwords!</p>
 </div>
