@@ -21,7 +21,9 @@
 #' @useDynLib ssh C_start_session
 #' @rdname ssh
 #' @aliases ssh
-#' @param host an ssh server string of the form `[user@]hostname[:@port]`
+#' @importFrom askpass askpass
+#' @param host an ssh server string of the form `[user@]hostname[:@port]`. An ipv6
+#' hostname should be wrapped in brackets like this: `[2001:db8::1]:80`.
 #' @param passwd either a string or a callback function for password prompt
 #' @param keyfile path to private key file. Must be in OpenSSH format (see details)
 #' @param verbose either TRUE/FALSE or a value between 0 and 4 indicating log level:
@@ -76,14 +78,22 @@ parse_host <- function(str, default_port){
     user <- me()
     x[1]
   }
-  x <- strsplit(host, ":", fixed = TRUE)[[1]]
-  if(length(x) > 2) stop("host string contains multiple ':' characters")
-  host <- x[1]
-  port <- if(length(x) > 1){
-    as.numeric(x[2])
+
+  # Check for port
+  m <- gregexpr(':[0-9]+$', host, ignore.case = TRUE)
+  port <- sub("^:", "", regmatches(host, m)[[1]])
+  port <- if(length(port)){
+    as.numeric(port)
   } else {
     as.numeric(default_port)
   }
+  host <- sub(':[0-9]+$', '', host)
+  if(grepl("^\\[.*\\]$", host)){
+    host <- sub('\\]$', '', sub('^\\[', "", host))
+  } else if(grepl(":", host)){
+    stop(sprintf("Invalid hostname '%s'. Use brackets for ipv6 hosts like this: [2001:db8::1]:22", host))
+  }
+
   list(
     user = user,
     host = host,
@@ -93,11 +103,6 @@ parse_host <- function(str, default_port){
 
 me <- function(){
   tolower(Sys.info()[["user"]])
-}
-
-askpass <- function(prompt = "Please enter your password: "){
-  FUN <- getOption("askpass", getPass::getPass)
-  FUN(prompt)
 }
 
 assert_session <- function(x){

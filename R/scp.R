@@ -41,16 +41,17 @@
 scp_download <- function(session, files, to = ".", verbose = TRUE){
   assert_session(session)
   stopifnot(is.character(files))
-  stopifnot(is.character(to))
+  to <- normalizePath(to, mustWork = TRUE)
   if(length(files) != 1)
     stop("For scp_download(), the 'files' parameter should be a single file or directory")
   cb <- function(data, filepath){
     target <- do.call(file.path, as.list(c(to, filepath)))
     if(verbose)
-      cat(sprintf("%10d %s\n", length(data), target))
+      cat(sprintf("%10.0f %s\n", as.double(length(data)), target))
     if(is.null(data))
       return(dir.create(target, recursive = TRUE, showWarnings = FALSE))
-    writeBin(data, target)
+    writer <- file_writer(target)
+    writer(data = data, close = TRUE)
   }
   .Call(C_scp_download_recursive, session, files, cb)
 }

@@ -44,13 +44,17 @@ static SEXP stream_to_r(ssh_scp scp){
   unsigned char * ptr = RAW(out);
   size_t read_bytes = 0;
   do {
+    if(pending_interrupt()){
+      ssh_scp_deny_request(scp, "user interrupt");
+      return NULL;
+    }
     read_bytes = ssh_scp_read(scp, ptr, size);
     ptr += read_bytes;
     size -= read_bytes;
+    //REprintf("\r Remaining: %lld bytes", size);
   } while(size != 0);
   return out;
 }
-
 
 /* Retrieve file from remote host */
 SEXP C_scp_read_file(SEXP ptr, SEXP path){
@@ -75,14 +79,15 @@ SEXP C_scp_write_file(SEXP ptr, SEXP path, SEXP data){
   strncpy(filename, basename(cpath), 3999);
   if(strcmp(cpath, filename))
     enter_directory(scp, dirname(cpath), ssh);
-  assert_scp(ssh_scp_push_file(scp, filename, Rf_length(data), 420L), "ssh_scp_push_file", scp, ssh);
-  assert_scp(ssh_scp_write(scp, RAW(data), Rf_length(data)), "ssh_scp_write", scp, ssh);
+  assert_scp(ssh_scp_push_file(scp, filename, Rf_xlength(data), 420L), "ssh_scp_push_file", scp, ssh);
+  assert_scp(ssh_scp_write(scp, RAW(data), Rf_xlength(data)), "ssh_scp_write", scp, ssh);
   ssh_scp_close(scp);
   ssh_scp_free(scp);
   return path;
 }
 
 static void call_cb(SEXP data, SEXP cb, char * pwd[1000], int depth){
+  //REprintf("Running call_cb\n");
   PROTECT(data);
   SEXP dir = PROTECT(dirvec_to_r(pwd, depth + 1));
   SEXP call = PROTECT(Rf_lcons(cb, Rf_lcons(data, Rf_lcons(dir, R_NilValue))));
@@ -102,7 +107,10 @@ SEXP C_scp_download_recursive(SEXP ptr, SEXP path, SEXP cb){
     case SSH_SCP_REQUEST_NEWFILE:
       assert_scp(ssh_scp_accept_request(scp), "ssh_scp_accept_request", scp, ssh);
       pwd[depth] = strdup(ssh_scp_request_get_filename(scp));
-      call_cb(stream_to_r(scp), cb, pwd, depth);
+      SEXP data = stream_to_r(scp);
+      if(data == NULL)
+        goto cleanup;
+      call_cb(data, cb, pwd, depth);
       free(pwd[depth]);
       break;
     case SSH_SCP_REQUEST_NEWDIR:
@@ -136,8 +144,6 @@ SEXP C_scp_write_recursive(SEXP ptr, SEXP sources, SEXP sizes, SEXP paths, SEXP 
   ssh_session ssh = ssh_ptr_get(ptr);
   ssh_scp scp = ssh_scp_new(ssh, SSH_SCP_WRITE | SSH_SCP_RECURSIVE, CHAR(STRING_ELT(to, 0)));
   assert_scp(ssh_scp_init(scp), "ssh_scp_init", scp, ssh);
-  if(ssh_scp_push_directory(scp, ".", 493L) != SSH_OK)
-    Rf_errorcall(R_NilValue, "Failed to create: %s (no such directory?)\n", CHAR(STRING_ELT(to, 0)));
   int depth = 0;
   char * pwd[1000];
   for(int i = 0; i < Rf_length(paths); i++){

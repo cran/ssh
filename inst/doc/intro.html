@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2018-05-27" />
+<meta name="date" content="2019-02-18" />
 
 <title>Secure Shell (SSH) Client for R</title>
 
@@ -1353,6 +1353,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -1360,14 +1363,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -1479,7 +1542,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Secure Shell (SSH) Client for R</h1>
-<h4 class="date"><em>2018-05-27</em></h4>
+<h4 class="date"><em>2019-02-18</em></h4>
 
 </div>
 
@@ -1501,12 +1564,11 @@ sudo yum install libssh-devel</code></pre>
 <div id="connecting-to-an-ssh-server" class="section level2">
 <h2>Connecting to an SSH server</h2>
 <p>First create an ssh session by connecting to an SSH server.</p>
-<pre class="r"><code>session &lt;- ssh_connect(&quot;jeroen@dev.opencpu.org&quot;)</code></pre>
-<pre><code>Calling my_auth_callback</code></pre>
-<pre class="r"><code>print(session)</code></pre>
+<pre class="r"><code>session &lt;- ssh_connect(&quot;jeroen@dev.opencpu.org&quot;)
+print(session)</code></pre>
 <pre><code>&lt;ssh session&gt;
 connected: jeroen@dev.opencpu.org:22
-server: 1e:28:44:af:84:91:e5:88:fe:82:ca:34:d7:c8:cf:a8:0d:2f:ec:af</code></pre>
+server: 1c:86:dc:b9:77:2c:74:ee:2d:00:49:6f:2e:c8:b2:61:5e:14:53:73</code></pre>
 <p>Once established, a session is closed automatically by the garbage collector when the object goes out of scope or when R quits. You can also manually close it using <code>ssh_disconnect()</code> but this is not strictly needed.</p>
 </div>
 <div id="authentication" class="section level2">
@@ -1569,13 +1631,15 @@ print(out$status)</code></pre>
 <pre><code>[1] 0</code></pre>
 <pre class="r"><code>cat(rawToChar(out$stdout))</code></pre>
 <pre><code>
-R version 3.4.4 (2018-03-15) -- &quot;Someone to Lean On&quot;
+R version 3.5.2 (2018-12-20) -- &quot;Eggshell Igloo&quot;
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type &#39;license()&#39; or &#39;licence()&#39; for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type &#39;contributors()&#39; for more information and
@@ -1586,8 +1650,8 @@ Type &#39;demo()&#39; for some demos, &#39;help()&#39; for on-line help, or
 Type &#39;q()&#39; to quit R.
 
 &gt; rnorm(10)
- [1]  0.14301778 -0.26873489  0.83931307  0.22034917  0.87214122 -0.13655736
- [7] -0.08793867 -0.68616146  0.23469591  0.93871035
+ [1] -1.137542994  1.943188527 -0.580907029  0.287785097  0.731415081
+ [6] -1.573093754  0.474126695 -1.175578241 -0.374322099 -0.003668059
 &gt; 
 &gt; </code></pre>
 <p>This function is very useful if you are running a remote command and want to use it’s output as if you had executed it locally.</p>
