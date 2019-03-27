@@ -1,4 +1,4 @@
-context("scp")
+context("ssh-scp")
 
 ssh <- ssh_connect('dev.opencpu.org')
 
@@ -40,3 +40,5 @@ test_that("Upload and download a directory", {
   expect_equal(content(v1), content(v2))
   unlink(target_dir, recursive = TRUE)
 })
+
+ssh_disconnect(ssh)

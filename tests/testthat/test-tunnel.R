@@ -1,11 +1,14 @@
-context("tunnel")
+context("ssh-tunnel")
 
-R <- file.path(R.home("bin"), "R")
+is_windows <- function(){
+  Sys.info()[["sysname"]] == "Windows"
+}
 
 test_that("Tunnel: recycle port in process",{
   # Start tunnel twice!
-  pid <- sys::exec_background(R, std_out = FALSE, std_err = FALSE, args = c("-e",
-    "library(ssh);x=ssh_connect('dev.opencpu.org');ssh_tunnel(x,target='ds043942.mongolab.com:43942');ssh_tunnel(x,target='ds043942.mongolab.com:43942')"))
+  pid <- sys::r_background(std_out = FALSE, std_err = FALSE, args = c("-e",
+    paste0("library(ssh);x=ssh_connect('dev.opencpu.org');ssh_tunnel(x,target='ds043942.mongolab.com:43942');",
+    "ssh_tunnel(x,target='ds043942.mongolab.com:43942');ssh_disconnect(x)")))
 
   # Connect and disconnect twice on the same parent process
   for(i in 1:2){
@@ -24,11 +27,11 @@ test_that("Tunnel: recycle port in process",{
 
 test_that("Tunnel: free port on exit", {
   for(i in 1:3){
-    pid <- sys::exec_background(R, std_out = FALSE, std_err = FALSE, args = c("-e",
-      "ssh::ssh_tunnel(ssh::ssh_connect('dev.opencpu.org'),target='ds043942.mongolab.com:43942')"))
-    on.exit(tools::pskill(pid, tools::SIGKILL))
+    pid <- sys::r_background(std_out = interactive(), std_err = interactive(), args = c("-e",
+      "x=ssh::ssh_connect('dev.opencpu.org');ssh::ssh_tunnel(x,target='ds043942.mongolab.com:43942');ssh::ssh_disconnect(x)"))
     Sys.sleep(3)
     expect_equal(sys::exec_status(pid, wait = FALSE), NA_integer_)
+    Sys.sleep(3)
     con <- mongolite::mongo("mtcars", url = "mongodb://readwrite:test@localhost:5555/jeroen_test")
     expect_is(con, 'mongo')
     if(con$count())
@@ -37,12 +40,17 @@ test_that("Tunnel: free port on exit", {
     out <- con$find()
     expect_equal(out, mtcars)
     con$drop()
-    if(i == 2 && Sys.info()[["sysname"]] != "Windows"){
+    if(i == 2){
+      # Test that process can also be interrupted. For Windows this results in non-success.
       tools::pskill(pid, tools::SIGINT)
+      expect_equal(sys::exec_status(pid), ifelse(is_windows(), 1, 0))
     } else {
-      rm(con); gc()
+      con$disconnect()
+      expect_equal(sys::exec_status(pid), 0)
     }
-    expect_equal(sys::exec_status(pid), 0)
     expect_error(con$count())
+
+    #not needed but just in case:
+    tools::pskill(pid, tools::SIGKILL)
   }
 })

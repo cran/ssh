@@ -1,6 +1,6 @@
 ---
 title: "Secure Shell (SSH) Client for R"
-date: "2019-02-18"
+date: "2019-03-26"
 output:
   html_document:
     fig_caption: false
@@ -103,6 +103,21 @@ ssh_agent_get_ident_count: Answer type: 12, expected answer: 12
 ssh_userauth_publickey_auto: Successfully authenticated using /Users/jeroen/.ssh/id_rsa
 ```
 
+Tools for setting up and debugging your ssh keys are provided via the [`credentials` package](http://bit.ly/2UaiYbo).
+
+
+```r
+ssh_key_info()
+```
+
+```
+$key
+[1] "/Users/jeroen/.ssh/id_rsa"
+
+$pubkey
+[1] "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDwI/G2v42n/fVFbuyOL/7eh06MOK71djbe7wr8op0LcMbCiMOHOFdMRpb+UcwlfnXDYWwNZsfr3l4Hvfbdi5CesDwZmx4FQ4BC4e+2IRqCbwknVwdIMfBwLWd9HNs8hJ8M7YW4lt0TucMtVkzGN4wFR+onvzyU0VSiSiT1JQUY+7g4YMJlmhKN3lES+as1RFMExLosFlzydD7o35nMuKp1VzdkUaWm3xjFCTl7MVl6cbCWh7m3IDl95tTT0jH+pxvK2Vgb3u+r+tH7dWbbjm9tkwH7NS5HwEjy08cKUv+8BUnDLC27EuK2/k+Ro6BsEDHmq0z0nf6FgpTXQ0iJxnUZ"
+```
+
 ## Execute Script or Command
 
 Run a command or script on the host and block while it runs. By default stdout and stderr are steamed directly back to the client. This function returns the exit status of the remote command (hence it does not automatically error for an unsuccessful exit status). 
@@ -169,8 +184,8 @@ cat(rawToChar(out$stdout))
 
 ```
 
-R version 3.5.2 (2018-12-20) -- "Eggshell Igloo"
-Copyright (C) 2018 The R Foundation for Statistical Computing
+R version 3.5.3 (2019-03-11) -- "Great Truth"
+Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -188,8 +203,8 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > rnorm(10)
- [1] -1.137542994  1.943188527 -0.580907029  0.287785097  0.731415081
- [6] -1.573093754  0.474126695 -1.175578241 -0.374322099 -0.003668059
+ [1] -0.4657579  0.1628843 -1.8308908 -1.4333284 -1.6689843 -0.3603318
+ [7] -0.3299621 -0.2162147  1.0788035 -0.9536821
 > 
 > 
 ```
@@ -233,4 +248,15 @@ ssh_tunnel(session, port = 5555, target = "ds043942.mongolab.com:43942")
 ```
 
 This function blocks while the tunnel is active. Use the tunnel by connecting to `localhost:5555` from a separate process. The tunnel can only be used once and will automatically be closed when the client disconnects.
+
+## Disconnecting
+
+When you are done with the session you should disconnect:
+
+
+```r
+ssh_disconnect(session)
+```
+
+If you forgot to disconnect, the garbage collector will do so for you (with a warning).
 

@@ -50,10 +50,12 @@ scp_download(session, "~/target/*", to = tempdir())
 
 # delete it from the server
 ssh_exec_wait(session, command = "rm -Rf ~/target")
+ssh_disconnect(session)
 }
 }
 \seealso{
 Other ssh: \code{\link{ssh_connect}},
-  \code{\link{ssh_exec}}, \code{\link{ssh_tunnel}}
+  \code{\link{ssh_credentials}}, \code{\link{ssh_exec}},
+  \code{\link{ssh_tunnel}}
 }
 \concept{ssh}

@@ -26,6 +26,6 @@ connection, not as a long running proxy server.
 }
 \seealso{
 Other ssh: \code{\link{scp}}, \code{\link{ssh_connect}},
-  \code{\link{ssh_exec}}
+  \code{\link{ssh_credentials}}, \code{\link{ssh_exec}}
 }
 \concept{ssh}
