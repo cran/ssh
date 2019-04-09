@@ -1,7 +1,7 @@
-8e856761d212b3514f431cfcbc01f6b2 *DESCRIPTION
+dd794d0073362c95c63b5c6c04c7e8e6 *DESCRIPTION
 1ee0683cce6d3479250337954c075d63 *LICENSE
 96263c945fc6cf157ddc0cc8db1e8972 *NAMESPACE
-21da82d0f3c66408eae2a980675e0cb1 *NEWS
+835991b712f9deae65d7f138c36f164b *NEWS
 8ee627db4a37b80289f2a1281c47b21e *R/connect.R
 6b1e3aecc450f9f6cc4d7322206a8e5b *R/credentials.R
 920ee9e7ed52be5110a1fbf769b62849 *R/exec.R
@@ -26,7 +26,7 @@ ecbdd557c586e68d513b8b6f8123f796 *src/command.c
 60130472621ec38c7b561acb0d97c7fb *src/init.c
 ac2aeff9ae75ee4c7b1b3516dbef650e *src/myssh.h
 dcc67b222b4a19a7899bf0aaf9ad1031 *src/scp.c
-1b7ae126acbdcabdc2b5111f1f01b8f9 *src/session.c
+e76ca78a1cdf4fbe4e2da9fc319c3b32 *src/session.c
 e25d983c9e5c10ec464a83094dde9a02 *src/tunnel.c
 5250c2a1a6289c9a6ff5d3f4e196d156 *src/writer.c
 bc882e5235bfdccc9e49f99290365b40 *tests/spelling.R
