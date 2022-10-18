@@ -1,7 +1,7 @@
-49d113159a6bddb335b495a3cd349b68 *DESCRIPTION
+7e8c8c8cc2a8fab48e3c8df5c53497da *DESCRIPTION
 27b6128fe44dac890bf5c9dfce3a744c *LICENSE
 96263c945fc6cf157ddc0cc8db1e8972 *NAMESPACE
-8112832ba8ceb9c617099ec8c6deaf7c *NEWS
+04e5b0a736cdab5c57d1bfb653383b34 *NEWS
 ff9eff14c23dea62cc5a954363779634 *R/connect.R
 6b1e3aecc450f9f6cc4d7322206a8e5b *R/credentials.R
 6c1f2ea0fb982d4ddf11305623d8ce43 *R/exec.R
@@ -24,12 +24,12 @@ df326886390b1433b60a20c254d5abeb *man/ssh_exec.Rd
 2cec33791efd347cbcb051402d7cf9c4 *src/Makevars.ucrt
 db3e1659bc4c776139216f051a35a8cf *src/Makevars.win
 ecbdd557c586e68d513b8b6f8123f796 *src/command.c
-77d05b7067c9fa2ee579958ae5f87e06 *src/init.c
-8505174eaf22cb383d8612b37015e0c7 *src/myssh.h
+822eee80ccfcfc86ffe7255ef46bace7 *src/init.c
+d4aaea1b0c450c431eeb5ff9cc8f3b11 *src/myssh.h
 04ea610cf31f61ee7c44cd51fd7ab649 *src/scp.c
-e76ca78a1cdf4fbe4e2da9fc319c3b32 *src/session.c
-5d9733d99857e533e4091277ab27190b *src/tunnel.c
-5250c2a1a6289c9a6ff5d3f4e196d156 *src/writer.c
+4590c8bb9eb2a5058ee125bedaf95676 *src/session.c
+bbb980301667c951500b91aaaddc24b1 *src/tunnel.c
+0740560ead3011878f608b3434f9235a *src/writer.c
 fc346f8d6b7789c426efabf3fab711b7 *tests/engine.R
 eb55b37c14a18ae937de963d7997358c *tests/engine.Rout.save
 bc882e5235bfdccc9e49f99290365b40 *tests/spelling.R

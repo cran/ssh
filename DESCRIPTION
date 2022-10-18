@@ -1,7 +1,7 @@
 Package: ssh
 Type: Package
 Title: Secure Shell (SSH) Client for R
-Version: 0.8.1
+Version: 0.8.2
 Authors@R: person("Jeroen", "Ooms", role = c("aut", "cre"), 
     email = "jeroen@berkeley.edu", comment = c(ORCID = "0000-0002-4035-0289"))
 Description: Connect to a remote server over SSH to transfer files via SCP, 
@@ -18,8 +18,8 @@ URL: https://docs.ropensci.org/ssh/ (website),
         https://github.com/ropensci/ssh (devel)
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2022-09-24 21:20:07 UTC; jeroen
+Packaged: 2022-10-18 09:41:48 UTC; jeroen
 Author: Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>)
 Maintainer: Jeroen Ooms <jeroen@berkeley.edu>
 Repository: CRAN
-Date/Publication: 2022-09-24 21:40:02 UTC
+Date/Publication: 2022-10-18 10:10:05 UTC
