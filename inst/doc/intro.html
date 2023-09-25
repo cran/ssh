@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2019-03-26" />
+<meta name="date" content="2023-09-25" />
 
 <title>Secure Shell (SSH) Client for R</title>
 
@@ -1485,7 +1485,7 @@ font-size: 0.95em;
 
 
 <h1 class="title toc-ignore">Secure Shell (SSH) Client for R</h1>
-<h4 class="date">2019-03-26</h4>
+<h4 class="date">2023-09-25</h4>
 
 </div>
 
@@ -1505,8 +1505,7 @@ or <strong>Ubuntu</strong> use <a href="https://packages.debian.org/testing/libs
 EPEL:</p>
 <pre><code>sudo yum install epel-release
 sudo yum install libssh-devel</code></pre>
-<p>On <strong>OS-X</strong> use <a href="https://github.com/Homebrew/homebrew-core/blob/master/Formula/libssh.rb">libssh</a>
-from Homebrew:</p>
+<p>On <strong>OS-X</strong> use libssh from Homebrew:</p>
 <pre><code>brew install libssh</code></pre>
 </div>
 <div id="connecting-to-an-ssh-server" class="section level2">
@@ -1515,8 +1514,8 @@ from Homebrew:</p>
 <pre class="r"><code>session &lt;- ssh_connect(&quot;jeroen@dev.opencpu.org&quot;)
 print(session)</code></pre>
 <pre><code>&lt;ssh session&gt;
-connected: jeroen@dev.opencpu.org:22
-server: 1c:86:dc:b9:77:2c:74:ee:2d:00:49:6f:2e:c8:b2:61:5e:14:53:73</code></pre>
+jeroen@dev.opencpu.org:22 (connected)
+server: 90:eb:52:6b:ee:fc:de:f1:c0:66:6c:53:82:dd:ce:80:d3:85:1e:d8</code></pre>
 <p>Once established, a session is closed automatically by the garbage
 collector when the object goes out of scope or when R quits. You can
 also manually close it using <code>ssh_disconnect()</code> but this is
@@ -1559,10 +1558,10 @@ ssh_userauth_publickey_auto: Successfully authenticated using /Users/jeroen/.ssh
 package</a>.</p>
 <pre class="r"><code>ssh_key_info()</code></pre>
 <pre><code>$key
-[1] &quot;/Users/jeroen/.ssh/id_rsa&quot;
+[1] &quot;/Users/jeroen/.ssh/id_ed25519&quot;
 
 $pubkey
-[1] &quot;ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDwI/G2v42n/fVFbuyOL/7eh06MOK71djbe7wr8op0LcMbCiMOHOFdMRpb+UcwlfnXDYWwNZsfr3l4Hvfbdi5CesDwZmx4FQ4BC4e+2IRqCbwknVwdIMfBwLWd9HNs8hJ8M7YW4lt0TucMtVkzGN4wFR+onvzyU0VSiSiT1JQUY+7g4YMJlmhKN3lES+as1RFMExLosFlzydD7o35nMuKp1VzdkUaWm3xjFCTl7MVl6cbCWh7m3IDl95tTT0jH+pxvK2Vgb3u+r+tH7dWbbjm9tkwH7NS5HwEjy08cKUv+8BUnDLC27EuK2/k+Ro6BsEDHmq0z0nf6FgpTXQ0iJxnUZ&quot;</code></pre>
+[1] &quot;ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILGN+5tybmwKhcxvnwPSKlrp39Ni1gMD0UhV4gCxHg/x&quot;</code></pre>
 </div>
 <div id="execute-script-or-command" class="section level2">
 <h2>Execute Script or Command</h2>
@@ -1603,8 +1602,8 @@ print(out$status)</code></pre>
 <pre><code>[1] 0</code></pre>
 <pre class="r"><code>cat(rawToChar(out$stdout))</code></pre>
 <pre><code>
-R version 3.5.3 (2019-03-11) -- &quot;Great Truth&quot;
-Copyright (C) 2019 The R Foundation for Statistical Computing
+R version 4.1.2 (2021-11-01) -- &quot;Bird Hippie&quot;
+Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1622,8 +1621,8 @@ Type &#39;demo()&#39; for some demos, &#39;help()&#39; for on-line help, or
 Type &#39;q()&#39; to quit R.
 
 &gt; rnorm(10)
- [1] -0.4657579  0.1628843 -1.8308908 -1.4333284 -1.6689843 -0.3603318
- [7] -0.3299621 -0.2162147  1.0788035 -0.9536821
+ [1]  0.9324406  0.7037370  0.5538034 -0.8127880 -0.8670494 -0.6880066
+ [7] -0.7765106  1.1540114 -1.6692443 -0.5502898
 &gt; 
 &gt; </code></pre>
 <p>This function is very useful if you are running a remote command and
