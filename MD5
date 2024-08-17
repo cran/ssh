@@ -1,7 +1,7 @@
-73438bdfda96dc70500bb4ebfdded0aa *DESCRIPTION
+48dd4dd328f1b72ee0942bb4f4b072ce *DESCRIPTION
 27b6128fe44dac890bf5c9dfce3a744c *LICENSE
 96263c945fc6cf157ddc0cc8db1e8972 *NAMESPACE
-051470c66d2ca319909daa88e5cd0cfa *NEWS
+94dffe8ddb6b238a5d7f97c9c7333658 *NEWS
 73a3a46065ac9561f610d55b74cf1174 *R/connect.R
 6b1e3aecc450f9f6cc4d7322206a8e5b *R/credentials.R
 6c1f2ea0fb982d4ddf11305623d8ce43 *R/exec.R
@@ -9,8 +9,8 @@
 c7335dad212884a3c94613ef5b38ebbb *R/scp.R
 2f64ab98c432cedceec40ca83b75e9c2 *R/tunnel.R
 c9bbfaf927184579fed5f3894eaaafd0 *R/writer.R
-992b2fc3d2e4f21fab8e32d5f1ed3748 *build/vignette.rds
-a8f4963fbeaee57d5b0c203b97680673 *cleanup
+c98040d9e27aa58736d5ebdbdc43372f *build/vignette.rds
+4ce1fcf8d4a4b68aac58e1c00c2db6d0 *cleanup
 6f06abd06b6ec70771428192892e31ac *configure
 c64833768a32bdab10d47bae1c2902fb *inst/WORDLIST
 3853eecde894ed469d0248a840cdf6f3 *inst/doc/intro.Rmd
@@ -25,7 +25,7 @@ df326886390b1433b60a20c254d5abeb *man/ssh_exec.Rd
 ecbdd557c586e68d513b8b6f8123f796 *src/command.c
 822eee80ccfcfc86ffe7255ef46bace7 *src/init.c
 d4aaea1b0c450c431eeb5ff9cc8f3b11 *src/myssh.h
-8784239f749fa259ca314a8346895cb0 *src/scp.c
+069a3e3ca6f7906b91403e343f6ba007 *src/scp.c
 b7df1f2e04a9d84c167fb806d3fc069d *src/session.c
 bbb980301667c951500b91aaaddc24b1 *src/tunnel.c
 a4466e9d01cdd9e70323e001548b282a *src/writer.c
