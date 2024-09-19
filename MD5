@@ -1,7 +1,7 @@
-48dd4dd328f1b72ee0942bb4f4b072ce *DESCRIPTION
+40a55f446f00951fc99b7fbf9a34aa8b *DESCRIPTION
 27b6128fe44dac890bf5c9dfce3a744c *LICENSE
 96263c945fc6cf157ddc0cc8db1e8972 *NAMESPACE
-94dffe8ddb6b238a5d7f97c9c7333658 *NEWS
+a0863ed491953e7d58d497cd77949854 *NEWS
 73a3a46065ac9561f610d55b74cf1174 *R/connect.R
 6b1e3aecc450f9f6cc4d7322206a8e5b *R/credentials.R
 6c1f2ea0fb982d4ddf11305623d8ce43 *R/exec.R
@@ -10,7 +10,7 @@ c7335dad212884a3c94613ef5b38ebbb *R/scp.R
 2f64ab98c432cedceec40ca83b75e9c2 *R/tunnel.R
 c9bbfaf927184579fed5f3894eaaafd0 *R/writer.R
 c98040d9e27aa58736d5ebdbdc43372f *build/vignette.rds
-4ce1fcf8d4a4b68aac58e1c00c2db6d0 *cleanup
+a8f4963fbeaee57d5b0c203b97680673 *cleanup
 6f06abd06b6ec70771428192892e31ac *configure
 c64833768a32bdab10d47bae1c2902fb *inst/WORDLIST
 3853eecde894ed469d0248a840cdf6f3 *inst/doc/intro.Rmd
@@ -21,7 +21,7 @@ dfc37ce222f13c207be9f382f79901a6 *man/scp.Rd
 df326886390b1433b60a20c254d5abeb *man/ssh_exec.Rd
 28b2fa5b799b5bf81f40ae0ad2aea4a9 *man/ssh_tunnel.Rd
 85020c8f3932733495f5c5075b0426c5 *src/Makevars.in
-87e2ad79728f30ff96e722015e71ec3e *src/Makevars.win
+d056879f7091d2be10a772d8286d88c2 *src/Makevars.win
 ecbdd557c586e68d513b8b6f8123f796 *src/command.c
 822eee80ccfcfc86ffe7255ef46bace7 *src/init.c
 d4aaea1b0c450c431eeb5ff9cc8f3b11 *src/myssh.h
@@ -29,8 +29,6 @@ d4aaea1b0c450c431eeb5ff9cc8f3b11 *src/myssh.h
 b7df1f2e04a9d84c167fb806d3fc069d *src/session.c
 bbb980301667c951500b91aaaddc24b1 *src/tunnel.c
 a4466e9d01cdd9e70323e001548b282a *src/writer.c
-fc346f8d6b7789c426efabf3fab711b7 *tests/engine.R
-eb55b37c14a18ae937de963d7997358c *tests/engine.Rout.save
 bc882e5235bfdccc9e49f99290365b40 *tests/spelling.R
 2605ff62e6f0fdfe80932bcaa8ed0781 *tests/testthat.R
 740c7248e04eee4785125fdcb0d88ea9 *tests/testthat/test-exec.R
@@ -39,6 +37,6 @@ d61b633c0f21e93bd6725ee199f826de *tests/testthat/test-scp.R
 72cb3d0b80fd2252298937cad762ee78 *tests/testthat/test-tunnel.R
 ce1a09a0a60f13dfb8a718bd45e130fc *tests/testthat/testdir/hello
 95308763973e184d27e1848569e53e57 *tests/testthat/testdir/subdir/subsubdir/ijsco.jpg
-47862b7805f884540986f7bf706d0fb8 *tools/winlibs.R
+b5d2812bf96e0f33221db02523c32aeb *tools/winlibs.R
 3853eecde894ed469d0248a840cdf6f3 *vignettes/intro.Rmd
 37542e0c8c4556b02558a683f891f0c0 *vignettes/precompile.R
